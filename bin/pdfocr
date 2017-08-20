@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if ! docker images | grep pdfocr > /dev/null 2>&1; then
+    echo "docker image needs building. Run 'docker build -t pdfocr .' in the pdfocr directory"
+fi
+
+if [ $# -ne 2 ]
+  then
+    echo "Needs to be called with input.pdf and output.pdf"
+    exit 1
+fi
+
+cat "{$1}"| docker run --rm -i pdfocr /bin/bash convert.sh > "{$2}"
